@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity{
                 if(!pausado){
                     cronometro();
                 }
-                handler.postDelayed(this, 1);
+                handler.postDelayed(this, 10);
             }
         };
 
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity{
                     btn_stop.setText("Vuelta");
                 }
 
-                handler.postDelayed(runnableCode, 1);
+                handler.postDelayed(runnableCode, 10);
 
             }
         });
@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity{
                     horas = 0;
                     String time = String.format("%02d:%02d:%02d",minutes, seconds, mils);
                     tempo.setText(time);
+                    layout.removeAllViews();
                     btn_start.setText("Iniciar");
                     btn_stop.setText("Detener");
                 }else{
