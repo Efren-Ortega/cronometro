@@ -4,14 +4,25 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
+
+
+    private ViewGroup layout;
+    private ScrollView scrollView;
+
 
     private TextView tempo;
+    private TextView vuelta;
     private Button btn_start, btn_stop;
     private  int mils = 0;
     private int seconds = 0;
@@ -24,8 +35,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         getSupportActionBar().hide();
+
+        layout = (ViewGroup) findViewById(R.id.vg_vueltas);
+        scrollView = (ScrollView) findViewById(R.id.scrollView2);
 
 
         tempo = (TextView) findViewById(R.id.tempo);
@@ -78,12 +91,34 @@ public class MainActivity extends AppCompatActivity {
                     btn_start.setText("Iniciar");
                     btn_stop.setText("Detener");
                 }else{
-                    Toast.makeText(MainActivity.this, "Vuelta", Toast.LENGTH_SHORT).show();
+                    agregarVueltas();
                 }
             }
         });
 
 
+
+    }
+
+    public void agregarVueltas(){
+        LayoutInflater inflater = LayoutInflater.from(this);
+        int id = R.layout.vueltas_text;
+        RelativeLayout relativeLayout = (RelativeLayout) inflater.inflate(id, null, false);
+
+        TextView textView = (TextView) relativeLayout.findViewById(R.id.text_vuelta);
+        textView.setText(tempo.getText());
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        relativeLayout.setPadding(5, 0, 5, 10);
+        relativeLayout.setLayoutParams(params);
+        layout.addView(relativeLayout);
+
+        scrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+            }
+        });
 
     }
 
